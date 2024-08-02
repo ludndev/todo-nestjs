@@ -50,13 +50,13 @@ describe('TodosService', () => {
 
     service = module.get(TodosService);
     prisma = module.get(PrismaService);
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    prisma.todo.findMany.mockResolvedValue(testTodos); // @todo: why those rules make it work ?
   });
 
   it('should return all todos', async () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    prisma.todo.findMany.mockResolvedValue(testTodos); // why those rules make it work ?
-
     await expect(service.findAll()).resolves.toEqual(testTodos);
   });
   
