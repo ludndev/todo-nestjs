@@ -8,6 +8,18 @@ import { TodoDto } from './dto/todo.dto';
 export class TodosService {
   constructor(private prisma: PrismaService) {}
 
+  async count(status?: boolean) {
+    if (typeof status === 'boolean') {
+      return await this.prisma.todo.count({
+        where: {
+          status: status
+        },
+      });
+    }
+
+    return await this.prisma.todo.count();
+  }
+
   async findAll() {
     return await this.prisma.todo.findMany();
   }
