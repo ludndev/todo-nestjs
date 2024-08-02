@@ -59,4 +59,36 @@ describe('TodosService', () => {
 
     await expect(service.findAll()).resolves.toEqual(testTodos);
   });
+  
+  // it('should found 1 todo with status true', async () => {
+  //
+  // });
+  //
+  // it('should found 3 todos with status false', async () => {
+  //
+  // });
+  //
+  // it('should create todo', async () => {
+  //
+  // });
+  //
+  // it('should retrieve all todos', async () => {
+  //
+  // });
+  //
+  // it('should update todo [id:1] status to true', async () => {
+  //
+  // });
+  //
+  // it('should update todo [id:1] content', async () => {
+  //
+  // });
+  //
+  // it('should delete todo [id:1]', async () => {
+  //
+  // });
+  //
+  // it('should not found deleted todo [id:1]', async () => {
+  //
+  // });
 });
