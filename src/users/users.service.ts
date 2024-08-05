@@ -1,8 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserRegistrationDto } from './dto/user-registration.dto';
 import * as bcrypt from 'bcrypt';
+import { UserLoginDto } from './dto/user-login.dto';
 
+const saltOrRounds = 10;
 
 @Injectable()
 export class UsersService {
@@ -10,7 +16,6 @@ export class UsersService {
 
   async create(data: UserRegistrationDto) {
     try {
-      const saltOrRounds = 10;
       data.password = await bcrypt.hash(data.password, saltOrRounds);
 
       return await this.prisma.user.create({
@@ -45,5 +50,24 @@ export class UsersService {
         NOT: [{ sso_github_id: null }], // @todo: is it the correct way to filter null sso_github_id
       },
     });
+  }
+
+  async loginUser(userLoginDto: UserLoginDto) {
+    const user = await this.prisma.user.findFirstOrThrow({
+      where: {
+        email: userLoginDto.email,
+      },
+    });
+
+    const hash = await bcrypt.hash(userLoginDto.password, saltOrRounds);
+    const valid = await bcrypt.compare(hash, user.password);
+
+    if (valid) {
+      return {
+        email: user.email,
+      };
+    }
+
+    return new UnauthorizedException('Invalid Credentials');
   }
 }

@@ -2,6 +2,7 @@ import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserRegistrationDto } from './dto/user-registration.dto';
 import { UserInterface } from './interfaces/user.interface';
+import { UserLoginDto } from './dto/user-login.dto';
 
 @Controller('api/users')
 export class UsersController {
@@ -18,5 +19,11 @@ export class UsersController {
       email: user.email,
       password: user.password,
     };
+  }
+
+  @Post('/login')
+  @HttpCode(HttpStatus.OK)
+  async login(@Body() userLoginDto: UserLoginDto) {
+    return await this.usersService.loginUser(userLoginDto);
   }
 }
