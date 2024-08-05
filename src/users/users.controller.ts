@@ -10,7 +10,6 @@ export class UsersController {
   @Post('/register')
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() userRegistrationDto: UserRegistrationDto) {
-    // @todo: validate user email
     // @todo: password security check only in production/staging (allow unsafe for dev)
 
     const user: UserInterface = await this.usersService.create(userRegistrationDto);
