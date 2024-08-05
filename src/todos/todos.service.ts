@@ -32,6 +32,17 @@ export class TodosService {
     });
   }
 
+  async search(query: string) {
+    return await this.prisma.todo.findMany({
+      where: {
+        content: {
+          contains: query,
+          mode: 'insensitive',
+        }
+      }
+    });
+  }
+
   async store(todo: TodoDto) {
     return await this.prisma.todo.create({
       data: todo,

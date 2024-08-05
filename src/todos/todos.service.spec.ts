@@ -59,7 +59,12 @@ describe('TodosService', () => {
 
     await expect(service.findAll()).resolves.toEqual(testTodos);
   });
-  
+
+  //
+  // it('should return todos by search term', async () => {
+  //
+  // });
+  //
   // it('should found 1 todo with status true', async () => {
   //
   // });
