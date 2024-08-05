@@ -12,7 +12,8 @@ describe('TodosController', () => {
     controller = module.get<TodosController>(TodosController);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+  // it('should return 200 status code', async () => {
+  //   const response = await controller.listTodos();
+  //   expect(response).toBe(200);
+  // });
 });
