@@ -6,6 +6,6 @@ export class TodoDto {
 
   @ApiProperty({
     default: false,
-  })
+  }) // @todo: can this cause issues if status was true ?
   status?: boolean = false;
 }
