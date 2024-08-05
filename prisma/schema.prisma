@@ -13,10 +13,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            Int    @id @default(autoincrement())
+  email         String @unique
+  password      String
+  sso_github_id Int?   @unique
+  Todo          Todo[]
+}
+
 model Todo {
-  id          Int      @id @default(autoincrement())
-  content     String
-  status      Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  content   String
+  status    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
 }

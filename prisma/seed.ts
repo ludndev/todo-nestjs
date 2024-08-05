@@ -4,6 +4,15 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  const user = await prisma.user.create({
+    data: {
+      email: 'ludndev@gmail.com',
+      password: 'password',
+    },
+  });
+
+  console.log({ user });
+
   // create two dummy todos
   const todo1 = await prisma.todo.upsert({
     where: { id: 1 },
