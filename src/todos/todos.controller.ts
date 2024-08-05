@@ -4,12 +4,14 @@ import {
   Delete,
   Get,
   HttpCode,
+  NotFoundException,
   Param,
   Post,
   Put,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { TodoDto } from './dto/todo.dto';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('api/todos')
 export class TodosController {
@@ -21,6 +23,20 @@ export class TodosController {
     const data = await this.todosService.findAll();
     console.log(data);
     return data;
+  }
+
+  // this is set before /:id to avoid "search" parsing as url param
+  @ApiQuery({ name: 'query' })
+  @Get('/search')
+  async search(@Param() params: any) {
+    console.log('search todo');
+    const query: string = params.query;
+
+    if (query === '') {
+      throw new NotFoundException();
+    }
+
+    return await this.todosService.search(query);
   }
 
   @Get('/:id')
